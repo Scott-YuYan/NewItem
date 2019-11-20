@@ -1,10 +1,12 @@
 package hello.service;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -16,14 +18,22 @@ import java.util.Map;
 public class UserService implements UserDetailsService {
     private Map<String, String> usernameAndPassword = new HashMap<>();
 
-    public UserService() {
-        usernameAndPassword.put("zhangsan", "123");
-        usernameAndPassword.put("lisi", "321");
-        usernameAndPassword.put("zhaowu", "1234");
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Inject
+    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        saveUserIfo("zhangsan", "123");
+        saveUserIfo("lisi", "321");
+        saveUserIfo("zhaowu", "1234");
     }
 
     public void saveUserIfo(String username, String password) {
-        usernameAndPassword.put(username, password);
+        if (password.length() < 3) {
+            throw new BadCredentialsException("密码长度不能小于3");
+        } else {
+            usernameAndPassword.put(username, bCryptPasswordEncoder.encode(password));
+        }
     }
 
     public String getPassword(String username) {
