@@ -1,6 +1,6 @@
 package hello.service;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +16,7 @@ import java.util.Map;
 
 @Service
 public class UserService implements UserDetailsService {
+
     private Map<String, String> usernameAndPassword = new HashMap<>();
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -32,7 +33,11 @@ public class UserService implements UserDetailsService {
         if (password.length() < 3) {
             throw new BadCredentialsException("密码长度不能小于3");
         } else {
-            usernameAndPassword.put(username, bCryptPasswordEncoder.encode(password));
+            if (bCryptPasswordEncoder.encode(password) != null) {
+                usernameAndPassword.put(username, bCryptPasswordEncoder.encode(password));
+            } else {
+                throw new NullPointerException("空指针异常");
+            }
         }
     }
 
@@ -42,6 +47,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         String password = usernameAndPassword.get(username);
         if (usernameAndPassword.containsKey(username)) {
             return new User(username, password, Collections.emptyList());
