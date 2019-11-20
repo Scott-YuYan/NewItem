@@ -2,6 +2,7 @@ package hello;
 
 import hello.entity.Result;
 import hello.entity.User;
+import hello.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,9 +22,11 @@ import java.util.Map;
 @RestController
 public class AuthController {
     @Inject
-    UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
     @Inject
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
+    @Inject
+    private UserService userService;
 
 
     public AuthController() {
@@ -31,8 +34,14 @@ public class AuthController {
     }
 
     @GetMapping("/auth")
-    public User getUser() {
-        return new User(1, "zhangsan", " ", Instant.now(), Instant.now());
+    public Result getUser() {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        if ("anonymousUser".equals(name)) {
+            return new Result("ok", false);
+        } else {
+            User user = userService.getUserByUsername(name);
+            return new Result("ok", "登录成功", true, user);
+        }
     }
 
     @PostMapping("/auth/login")
@@ -45,7 +54,7 @@ public class AuthController {
         try {
             details = userDetailsService.loadUserByUsername(name);
         } catch (UsernameNotFoundException e) {
-            return new Result("fail", "用户名不存在", null);
+            return new Result("fail", "用户名不存在");
         }
         //对两份密码进行比对
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(details, password, details.getAuthorities());
@@ -53,11 +62,12 @@ public class AuthController {
         try {
             //验证密码是否正确，错误则抛出异常
             authenticationManager.authenticate(token);
+            //将用户信息保存在SecurityContextHolder,其实猜名字就能猜出来，就是设置Cookies
             SecurityContextHolder.getContext().setAuthentication(token);
             User user = new User(1, "hunger", "头像 url", Instant.now(), Instant.now());
-            return new Result("ok", "登录成功", user);
+            return new Result("ok", "登录成功",  user);
         } catch (BadCredentialsException e) {
-            return new Result("fail", "密码错误", null);
+            return new Result("fail", "密码不正确");
         }
     }
 

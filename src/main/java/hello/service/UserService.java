@@ -1,6 +1,5 @@
 package hello.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +8,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,16 +20,25 @@ public class UserService implements UserDetailsService {
 
     private Map<String, String> usernameAndPassword = new HashMap<>();
 
+    @Inject
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Inject
-    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
+    public UserService() {
+
+    }
+
+    public hello.entity.User getUserByUsername(String username){
+        return new hello.entity.User(1, username, "http://avatar.com/1.png", Instant.now(), Instant.now());
+    }
+
+    //告诉项目在启动时运行该方法
+    @PostConstruct
+    public void init(){
         saveUserIfo("zhangsan", "123");
         saveUserIfo("lisi", "321");
         saveUserIfo("zhaowu", "1234");
     }
-
     public void saveUserIfo(String username, String password) {
         if (password.length() < 3) {
             throw new BadCredentialsException("密码长度不能小于3");
