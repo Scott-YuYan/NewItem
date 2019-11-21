@@ -8,7 +8,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import java.time.Instant;
 import java.util.Map;
 
 @RestController
 public class AuthController {
-    @Inject
-    private UserDetailsService userDetailsService;
     @Inject
     private AuthenticationManager authenticationManager;
     @Inject
@@ -36,7 +32,8 @@ public class AuthController {
     @GetMapping("/auth")
     public Result getUser() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        if ("anonymousUser".equals(name)) {
+        User loginUser = userService.getUserByUsername(name);
+        if (loginUser == null) {
             return new Result("ok", false);
         } else {
             User user = userService.getUserByUsername(name);
@@ -52,7 +49,7 @@ public class AuthController {
 
         //获取用户真正的密码
         try {
-            details = userDetailsService.loadUserByUsername(name);
+            details = userService.loadUserByUsername(name);
         } catch (UsernameNotFoundException e) {
             return new Result("fail", "用户名不存在");
         }
@@ -64,7 +61,7 @@ public class AuthController {
             authenticationManager.authenticate(token);
             //将用户信息保存在SecurityContextHolder,其实猜名字就能猜出来，就是设置Cookies
             SecurityContextHolder.getContext().setAuthentication(token);
-            User user = new User(1, "hunger", "头像 url", Instant.now(), Instant.now());
+            User user = userService.getUserByUsername(name);
             return new Result("ok", "登录成功",  user);
         } catch (BadCredentialsException e) {
             return new Result("fail", "密码不正确");
