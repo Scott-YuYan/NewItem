@@ -21,14 +21,15 @@ import java.util.Map;
 
 @RestController
 public class AuthController {
-    @Inject
+
     private AuthenticationManager authenticationManager;
-    @Inject
+
     private UserService userService;
 
-
-    public AuthController() {
-
+    @Inject
+    public AuthController(AuthenticationManager authenticationManager, UserService userService) {
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     @GetMapping("/auth")

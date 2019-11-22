@@ -16,11 +16,15 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
 
-    @Inject
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Inject
     private UserMapper userMapper;
+
+    @Inject
+    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserMapper userMapper) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userMapper = userMapper;
+    }
 
     public hello.entity.User getUserByUsername(String username) {
         return userMapper.getUserByName(username);
@@ -31,12 +35,12 @@ public class UserService implements UserDetailsService {
     }
 
 
-    @PostConstruct
-    public void init() {
-        userMapper.insertIntoUser("zhangsan", bCryptPasswordEncoder.encode("123"));
-        userMapper.insertIntoUser("lisi", bCryptPasswordEncoder.encode("123"));
-        userMapper.insertIntoUser("zhaowu", bCryptPasswordEncoder.encode("123"));
-    }
+//    @PostConstruct
+//    public void init() {
+//        userMapper.insertIntoUser("zhangsan", bCryptPasswordEncoder.encode("123"));
+//        userMapper.insertIntoUser("lisi", bCryptPasswordEncoder.encode("123"));
+//        userMapper.insertIntoUser("zhaowu", bCryptPasswordEncoder.encode("123"));
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
