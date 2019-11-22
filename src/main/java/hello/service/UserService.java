@@ -16,17 +16,11 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
 
-
+    @Inject
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-    private UserMapper userMapper;
-
     @Inject
-    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserMapper userMapper) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userMapper = userMapper;
-    }
+    private UserMapper userMapper;
 
     public hello.entity.User getUserByUsername(String username) {
         return userMapper.getUserByName(username);
@@ -36,7 +30,7 @@ public class UserService implements UserDetailsService {
         userMapper.insertIntoUser(name, bCryptPasswordEncoder.encode(password));
     }
 
-    //告诉项目在启动时运行该方法
+
     @PostConstruct
     public void init() {
         userMapper.insertIntoUser("zhangsan", bCryptPasswordEncoder.encode("123"));
