@@ -30,13 +30,13 @@ public class UserService implements UserDetailsService {
         userMapper.insertIntoUser(name, bCryptPasswordEncoder.encode(password));
     }
 
-    //告诉项目在启动时运行该方法
-//    @PostConstruct
-//    public void init() {
-//        userMapper.insertIntoUser("zhangsan", bCryptPasswordEncoder.encode("123"));
-//        userMapper.insertIntoUser("lisi", bCryptPasswordEncoder.encode("123"));
-//        userMapper.insertIntoUser("zhaowu", bCryptPasswordEncoder.encode("123"));
-//    }
+
+    @PostConstruct
+    public void init() {
+        userMapper.insertIntoUser("zhangsan", bCryptPasswordEncoder.encode("123"));
+        userMapper.insertIntoUser("lisi", bCryptPasswordEncoder.encode("123"));
+        userMapper.insertIntoUser("zhaowu", bCryptPasswordEncoder.encode("123"));
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
