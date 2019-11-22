@@ -46,9 +46,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (userMapper.getUserByName(username) != null) {
-            String password = userMapper.getPasswordByName(username);
-            return new User(username, password, Collections.emptyList());
+        hello.entity.User user = userMapper.getUserByName(username);
+        if (user != null) {
+            return new User(username, user.getBcrPassword(), Collections.emptyList());
         } else {
             throw new UsernameNotFoundException(username + "用户名不存在");
         }
