@@ -45,10 +45,6 @@ public class AuthControllerTest {
     @Mock
     private UserService userService;
 
-    @BeforeEach
-    public void setupMock() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @BeforeEach
     void setup() {
@@ -74,8 +70,6 @@ public class AuthControllerTest {
 
         when(userService.loadUserByUsername("zhangsan"))
                 .thenReturn(new User("zhangsan", "password", Collections.emptyList()));
-        when(userMapperMock.getUserByName("zhangsan"))
-                .thenReturn(new hello.entity.User(1, "zhangsan", "password", "null", Instant.now(), Instant.now()));
         String JSON = new ObjectMapper().writeValueAsString(nameAndPassword);
         MvcResult mvcResult = mvc.perform(post("/auth/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
