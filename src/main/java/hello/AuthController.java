@@ -33,6 +33,9 @@ public class AuthController {
 
     @GetMapping("/auth")
     public Result getUser() {
+        if (SecurityContextHolder.getContext().getAuthentication() == null){
+            return Result.getFailResult("用户没有登录");
+        }
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         User loginUser = userService.getUserByUsername(name);
         if (loginUser == null) {

@@ -40,6 +40,10 @@ public class User {
         return bcrPassword;
     }
 
+    public User(String username, String bcrPassword) {
+        this.username = username;
+        this.bcrPassword = bcrPassword;
+    }
 
     public User(int id, String username, String bcrPassword, String avatar, Instant createdAt, Instant modifyAt) {
         this.id = id;

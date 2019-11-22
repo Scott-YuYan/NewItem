@@ -2,25 +2,21 @@ package hello.service;
 
 import hello.dao.UserMapper;
 import hello.entity.User;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import java.time.Instant;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
-
 
 
     @Mock
@@ -29,11 +25,6 @@ class UserServiceTest {
     BCryptPasswordEncoder bCryptPasswordEncoderMock;
     @InjectMocks
     UserService userService;
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
 
@@ -44,26 +35,24 @@ class UserServiceTest {
     }
 
     @Test
-    public void testGetUserByUsername(){
+    public void testGetUserByUsername() {
         userService.getUserByUsername("zhangsan");
         verify(userMapperMock).getUserByName("zhangsan");
     }
 
     @Test
-    public void testLoadUserByUsernameFail(){
+    public void testLoadUserByUsernameFail() {
         when(userMapperMock.getUserByName("zhangsan")).thenReturn(null);
-                Assertions.assertThrows(UsernameNotFoundException.class,
-                        () ->userService.loadUserByUsername("zhangsan"));
+        Assertions.assertThrows(UsernameNotFoundException.class,
+                () -> userService.loadUserByUsername("zhangsan"));
     }
 
     @Test
-    public void testLoadUserByUsernameSuccess(){
+    public void testLoadUserByUsernameSuccess() {
         when(userMapperMock.getUserByName("zhangsan"))
-                .thenReturn(new User(1,"zhangsan","password","null", Instant.now(),Instant.now()));
+                .thenReturn(new User("zhangsan", "password"));
         UserDetails details = userService.loadUserByUsername("zhangsan");
-        Assertions.assertEquals("zhangsan",details.getUsername());
-        Assertions.assertEquals("password",details.getPassword());
-
-
+        Assertions.assertEquals("zhangsan", details.getUsername());
+        Assertions.assertEquals("password", details.getPassword());
     }
 }
