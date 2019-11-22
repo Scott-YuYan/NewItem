@@ -6,7 +6,7 @@
 <li>如何将用户密码加密存储</li>
 <li>如何判断用户的密码是否正确</li>
 <li>如何设置Cookie保持状态</li>
-<li></li>
+<li>如何连接数MySQL据库</li>
 <li></li>
 <li></li>
 </ol>

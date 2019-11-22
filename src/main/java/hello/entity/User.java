@@ -1,10 +1,15 @@
 package hello.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.TimeZone;
 
 public class User {
     private int id;
     private String username;
+    @JsonIgnore
     private String bcrPassword;
     private String avatar;
     private Instant createdAt;
@@ -17,6 +22,7 @@ public class User {
     public String getUsername() {
         return username;
     }
+
 
     public String getAvatar() {
         return avatar;
