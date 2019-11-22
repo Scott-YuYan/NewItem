@@ -11,10 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-<<<<<<< HEAD
-=======
-
->>>>>>> yy
 import java.time.Instant;
 
 import static org.mockito.Mockito.verify;
