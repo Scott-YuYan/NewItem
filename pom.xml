@@ -52,7 +52,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.5.2</version>
+            <version>5.2.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -94,15 +94,26 @@
                     <url>jdbc:mysql://localhost:3306/mysql</url>
                     <user>root</user>
                     <password>password</password>
+                    <baselineOnMigrate>true</baselineOnMigrate>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>2.22.1</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/Integration</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>2.22.0</version>
+                <configuration>
+                    <includes>
+                        <include>**/Integration</include>
+                    </includes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
