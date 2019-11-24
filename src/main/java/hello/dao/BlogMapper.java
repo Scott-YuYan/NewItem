@@ -8,5 +8,5 @@ import java.util.List;
 @Mapper
 public interface BlogMapper {
 
-    List<Blog> getBlogFromDB(int page,int pageSize,int userId);
+    List<Blog> getBlogFromDB(int page, int pageSize, int userId);
 }

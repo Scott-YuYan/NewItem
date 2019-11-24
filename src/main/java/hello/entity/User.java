@@ -2,9 +2,7 @@ package hello.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.TimeZone;
 
 public class User {
     private int id;
