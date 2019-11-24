@@ -7,15 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
 public class BlogServiceTest {
     @Mock
     BlogDao blogDao;
     @InjectMocks
     BlogService blogService = new BlogService();
-
     @Test
     public void textBlog() {
 
