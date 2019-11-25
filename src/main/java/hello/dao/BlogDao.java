@@ -22,9 +22,9 @@ public class BlogDao {
     }
 
     public List<Blog> getBlog(int page, int pageSize, int userId) {
-        int offset = (page - 1) * pageSize + 1;
+        int offset = (page - 1) * pageSize;
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("user_id", userId);
+        parameters.put("user_Id", userId);
         parameters.put("offset", offset);
         parameters.put("limit", pageSize);
         return this.sqlSession.selectList("getBlogFromDatabase", parameters);

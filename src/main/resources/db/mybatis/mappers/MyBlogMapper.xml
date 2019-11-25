@@ -4,15 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MyBlogMapper">
     <select id="getBlogFromDatabase" resultType="Blog">
-        select * from Blog
-        <if test="user_Id ! = null">
+        select * from blog
+        <if test="user_Id >0">
             where user_Id=#{user_id}
         </if>
         limit #{offset},#{limit}
     </select>
     <select id="getCountOfUserId" resultType="int">
-        select count (*) from user
-        <if test="user_Id ! = null">
+        select count(*) from blog
+        <if test="user_Id >0">
             where user_Id=#{user_id}
         </if>
     </select>
