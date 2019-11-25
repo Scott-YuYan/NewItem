@@ -3,6 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MyUserMapper">
+
+    <select id="getBlogFromDatabase" resultType="Blog">
+
+    </select>
     <select id="rankUser" resultMap="scoreItem">
         select t.user_id,t.score_sum,user.name as user_name from
         (select user_id,sum(score) as score_sum from score group by user_id)t
