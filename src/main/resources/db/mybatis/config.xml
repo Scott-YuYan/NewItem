@@ -9,10 +9,10 @@
     </settings>
     <typeAliases>
         <typeAlias alias="User" type="hello.entity.User"/>
-        <typeAlias alias="Result" type="hello.entity.Result"/>
+        <typeAlias alias="Blog" type="hello.entity.Blog"/>
     </typeAliases>
     <mappers>
-        <mapper resource="db/mybatis/MyMapper.xml"/>
+        <mapper resource="db/mybatis/mappers/MyBlogMapper.xml"/>
         <mapper class="hello.dao.UserMapper"/>
     </mappers>
 </configuration>

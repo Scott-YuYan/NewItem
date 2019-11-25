@@ -1,7 +1,6 @@
 package hello.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hello.AuthController;
 import hello.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

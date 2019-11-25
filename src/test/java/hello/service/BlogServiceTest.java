@@ -30,12 +30,12 @@ public class BlogServiceTest {
     public void textBlog() {
         List<Blog> blogs = Arrays.asList(mock(Blog.class), mock(Blog.class), mock(Blog.class), mock(Blog.class));
         when(blogDao.getBlog(1, 2, 0)).thenReturn(blogs);
-        when(blogDao.getCountOfMatchCondition(0)).thenReturn(4);
+        when(blogDao.getCount(0)).thenReturn(4);
 
         BlogResult blogResult = blogService.getBlog(1, 2, 0);
 
         verify(blogDao).getBlog(1, 2, 0);
-        verify(blogDao).getCountOfMatchCondition(0);
+        verify(blogDao).getCount(0);
 
 
         Assertions.assertEquals(1, blogResult.getPage());

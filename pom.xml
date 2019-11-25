@@ -176,14 +176,13 @@
 <!--                        </configuration>-->
 <!--                    </execution>-->
 <!--                </executions>-->
-
 <!--            </plugin>-->
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>5.2.4</version>
                 <configuration>
-                    <url>jdbc:mysql://localhost:3306/mysql?useSSL=false&amp;allowPublicKeyRetrieval=true</url>
+                    <url>jdbc:mysql://localhost:3306/mysql?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;characterEncoding=UTF-8</url>
                     <user>root</user>
                     <password>password</password>
                     <baselineOnMigrate>true</baselineOnMigrate>

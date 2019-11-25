@@ -24,7 +24,10 @@ public class BlogService {
 
         try {
             blogs = blogDao.getBlog(page, pageSize, userId);
-            count = blogDao.getCountOfMatchCondition(userId);
+            count = blogDao.getCount(userId);
+            if (pageSize > count | pageSize < 0) {
+                pageSize = count;
+            }
             totalPage = (count % pageSize == 0) ? (count / pageSize) : (count / pageSize + 1);
         } catch (Exception e) {
             return BlogResult.failBlogResultBuilder(e.getMessage());
