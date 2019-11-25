@@ -19,10 +19,16 @@ public class BlogService {
     }
 
     public BlogResult getBlog(int page, int pageSize, int userId) {
-        List<Blog> blogs = blogDao.getBlog(page, pageSize, userId);
-        int count = blogDao.getCountOfMatchCondition(userId);
-        int totalPage = (count % pageSize == 0) ? (count / pageSize) : (count / pageSize + 1);
+        List<Blog> blogs;
+        int count, totalPage;
+
+        try {
+            blogs = blogDao.getBlog(page, pageSize, userId);
+            count = blogDao.getCountOfMatchCondition(userId);
+            totalPage = (count % pageSize == 0) ? (count / pageSize) : (count / pageSize + 1);
+        } catch (Exception e) {
+            return BlogResult.failBlogResultBuilder(e.getMessage());
+        }
         return BlogResult.successBlogResultBuilder(blogs, count, page, totalPage);
     }
-
 }

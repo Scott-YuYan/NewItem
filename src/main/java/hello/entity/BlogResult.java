@@ -8,11 +8,18 @@ public class BlogResult extends Result<List<Blog>> {
     private int totalPage;
 
     public static BlogResult successBlogResultBuilder(List<Blog> blogs, int total, int page, int totalPage){
-        return new BlogResult(blogs, total, page, totalPage);
+        return new BlogResult(blogs, total, page, totalPage,"ok","获取成功");
     }
 
-    private BlogResult(List<Blog> blogs, int total, int page, int totalPage) {
-        super("ok", "获取成功", blogs);
+    public static BlogResult failBlogResultBuilder(String msg){
+        return new BlogResult(null,0,0,0,"fail",msg);
+    }
+
+
+
+
+    private BlogResult(List<Blog> blogs, int total, int page, int totalPage,String status,String msg) {
+        super(status, msg, blogs);
         this.total = total;
         this.page = page;
         this.totalPage = totalPage;
