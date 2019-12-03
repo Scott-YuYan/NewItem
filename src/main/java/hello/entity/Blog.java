@@ -8,8 +8,8 @@ public class Blog{
     private String description;
     private String content;
     private User user;
-    private Instant created_at;
-    private Instant updated_at;
+    private Instant createAt;
+    private Instant modifyAt;
 
 
 
@@ -33,11 +33,11 @@ public class Blog{
         return user;
     }
 
-    public Instant getCreated_at() {
-        return created_at;
+    public Instant getCreateAt() {
+        return createAt;
     }
 
-    public Instant getUpdated_at() {
-        return updated_at;
+    public Instant getModifyAt() {
+        return modifyAt;
     }
 }

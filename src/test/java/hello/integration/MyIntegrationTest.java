@@ -19,7 +19,6 @@ public class MyIntegrationTest {
     Environment environment;
     @Test
     public void indexHtmlCanAccessTest() {
-        //拿到应用的端口
-        environment.getProperty("local.service.port");
+
     }
 }

@@ -24,6 +24,7 @@ public class BlogService {
 
         try {
             blogs = blogDao.getBlog(page, pageSize, userId);
+            System.out.println(blogs);
             count = blogDao.getCount(userId);
             if (pageSize > count | pageSize < 0) {
                 pageSize = count;
