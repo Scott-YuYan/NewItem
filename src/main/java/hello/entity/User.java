@@ -2,18 +2,22 @@ package hello.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.TimeZone;
 
 public class User {
     private int id;
+    @JsonIgnore
+    private int blogId;
     private String username;
     @JsonIgnore
     private String bcrPassword;
     private String avatar;
     private Instant createdAt;
     private Instant modifyAt;
+
+    public int getBlogId() {
+        return blogId;
+    }
 
     public int getId() {
         return id;
@@ -45,8 +49,9 @@ public class User {
         this.bcrPassword = bcrPassword;
     }
 
-    public User(int id, String username, String bcrPassword, String avatar, Instant createdAt, Instant modifyAt) {
+    public User(int id, int blogId, String username, String bcrPassword, String avatar, Instant createdAt, Instant modifyAt) {
         this.id = id;
+        this.blogId = blogId;
         this.username = username;
         this.bcrPassword = bcrPassword;
         this.avatar = avatar;

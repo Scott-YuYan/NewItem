@@ -48,7 +48,7 @@ class UserServiceTest {
     @Test
     public void testLoadUserByUsernameSuccess() {
         when(userMapperMock.getUserByName("zhangsan"))
-                .thenReturn(new User(1, "zhangsan", "password", "null", Instant.now(), Instant.now()));
+                .thenReturn(new User(1, 0,"zhangsan", "password", "null", Instant.now(), Instant.now()));
         UserDetails details = userService.loadUserByUsername("zhangsan");
         Assertions.assertEquals("zhangsan", details.getUsername());
         Assertions.assertEquals("password", details.getPassword());

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyBlogMapper">
+    <select id="getBlogFromDatabase" resultType="Blog">
+        select * from blog
+        <if test="user_Id >0">
+            where user_Id=#{user_id}
+        </if>
+        limit #{offset},#{limit}
+    </select>
+    <select id="getCountOfUserId" resultType="int">
+        select count(*) from blog
+        <if test="user_Id >0">
+            where user_Id=#{user_id}
+        </if>
+    </select>
+</mapper>
+
